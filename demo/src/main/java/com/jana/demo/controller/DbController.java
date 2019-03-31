@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.jana.demo.aop.Log;
 import com.jana.demo.util.Constants;
 
 @Component
@@ -34,6 +35,7 @@ public class DbController {
     }
 	
     
+    @Log("Query user by name")
 	public List<Map<String, Object>> queryUserByName(String dbId, String name) {
 
 		String sql = Constants.SQL_QUERY_USER;
