@@ -1,5 +1,8 @@
 package com.jana.demo.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -32,5 +35,21 @@ public class Service {
         return "hello";
         
     }
+	
+	@GetMapping(value = "/process-test")
+	public String fetchProcess() throws IOException{
+		String pythonExe = "/Library/Frameworks/Python.framework/Versions/3.5/bin/python3";
+//        ProcessBuilder pb = new ProcessBuilder().command(pythonExe, "pyTest.py", "1", "2", "3");   
+        ProcessBuilder pb =  new ProcessBuilder().command(pythonExe, "pyTest.py", "1", "2", "3")
+        		.redirectOutput(
+        				Redirect.to(new File("hi.txt")));
+        
+        pb.directory(new File(System.getProperty("user.dir")));  
+        Map<String, String> map = pb.environment();  
+//        System.out.println(map);
+        Process p1 = pb.start();
+        
+		return "hi";
+	}
 	
 }
