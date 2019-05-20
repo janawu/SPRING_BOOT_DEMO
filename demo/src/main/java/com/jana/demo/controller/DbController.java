@@ -34,12 +34,12 @@ public class DbController {
     }
 	
     
-	public List<Map<String, Object>> queryUserByName(String dbId, String name) {
+	public List<Map<String, Object>> queryUserByName(String subFab, String name) {
 
 		String sql = Constants.SQL_QUERY_USER;
 		Map<String,String> paramMap = new TreeMap<>();
 		paramMap.put(Constants.PARAM_NAME, name);
-		List<Map<String, Object>> result = dbRouter(dbId).queryForList(sql,paramMap);
+		List<Map<String, Object>> result = dbRouter(subFab).queryForList(sql,paramMap);
 
 		return result;
 	}
