@@ -9,11 +9,14 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jana.demo.aop.Log;
 import com.jana.demo.controller.DbController;
+import com.jana.demo.pojo.UpdateDO;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -28,12 +31,10 @@ public class Service {
 	
 	@GetMapping(value = "/user")
 	public String fetchUser(@RequestParam String dbId, @RequestParam String name){
-			
+		//http://localhost:8080/user?dbId=db1&name=Jana
 		List<Map<String, Object>> result = dbController.queryUserByName(dbId, name);
 		System.out.println(result);
-		
-        return "hello";
-        
+		return result.toString(); 
     }
 	
 	@GetMapping(value = "/process-test")
@@ -51,6 +52,8 @@ public class Service {
         
 		return "hi";
 	}
+	
+	
 	
 	
 	
