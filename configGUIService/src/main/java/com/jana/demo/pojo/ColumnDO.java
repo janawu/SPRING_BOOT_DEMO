@@ -11,8 +11,10 @@ public class ColumnDO {
 	private String alias;
 	private String data_type;
 	private boolean is_key;
+	private boolean is_nullable;
 	private boolean is_optional;
-	private List<String> options;
+	private List<Object> options;
+	private Object default_val;
 	
 	@Override
     public String toString() {
@@ -59,12 +61,30 @@ public class ColumnDO {
 		this.is_optional = is_optional;
 	}
 
-	public List<String> getOptions() {
+	public boolean isIs_nullable() {
+		return is_nullable;
+	}
+
+	public void setIs_nullable(boolean is_nullable) {
+		this.is_nullable = is_nullable;
+	}
+
+	public List<Object> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<String> options) {
+	public void setOptions(List<Object> options) {
 		this.options = options;
 	}
+
+	public Object getDefault_val() {
+		return default_val;
+	}
+
+	public void setDefault_val(Object default_val) {
+		this.default_val = default_val;
+	}
+
+	
 	
 }

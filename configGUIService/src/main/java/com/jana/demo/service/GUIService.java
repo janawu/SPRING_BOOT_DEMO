@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,37 +41,36 @@ public class GUIService {
 	@Autowired
 	private DbController dbController;
 	
-	@GetMapping(value="/query")
-	public String queryTable(@RequestParam("table") String tableName){
+	/**
+	 *	Query table current data
+	 */
+	@GetMapping(value="/query", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Map<String, Object>> queryTable(@RequestParam("table") String tableName){
 		
-        try {
-        	Optional<TableDO> _t = getTableMetaData(tableName);
-			if (!_t.isPresent()) {
-				return "Error - Table not defined";
-			}
+		List<Map<String, Object>> data = new ArrayList<>();
+		
+    	Optional<TableDO> _t = getTableMetaData(tableName);
+		if (_t.isPresent()) {
 			String querySql = _t.get().getQuery_sql();
-			List<ColumnDO> cols = _t.get().getColumns();
-			List<Map<String, Object>> data = dbController.queryTable(querySql);
-			Map<String, Object> result = new HashMap<>();
-			result.put("data", data);
-			result.put("columns", cols);
-			
-			String jsonString = new ObjectMapper().writeValueAsString(result);
-			
-			return jsonString;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+			data = dbController.queryTable(querySql);
 		}
-  
-		return "Error";
+		
+		return data;
 	}
 	
-	@PostMapping(value="/updateTable")
-	public String updateTable(@RequestBody UpdateDO updateDO){
+	/**
+	 *	Get configuration table list with metadata
+	 */
+	@GetMapping(value="/configTableList", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<TableDO> queryConfigTableList(){
 		
-		// TODO add id ?
-		// if user edit key ?
+		List<TableDO> tableList = getTableMetaData();
+		return tableList;
+		
+	}
+	
+	@PostMapping(value="/updateTable", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Map<String, Object>> updateTable(@RequestBody UpdateDO updateDO) {
 		
 		String tableName = updateDO.getTableName();
 		String updateUser = updateDO.getUpdateUser();
@@ -78,8 +79,8 @@ public class GUIService {
 		/* query existed data */
 		Optional<TableDO> _t = getTableMetaData(tableName);
 		if (!_t.isPresent()) {
-			logger.error("Error - Table not defined");
-			return "Error - Table not defined";
+			logger.error("Table [{}] not defined", tableName);
+			return genErrMsgToReturn("Error - Table ["+tableName+"] not defined");
 		}
 		String querySql = _t.get().getQuery_sql();
 		String insertSql = _t.get().getInsert_sql();
@@ -89,7 +90,6 @@ public class GUIService {
 								.filter(j->j.isIs_key() == true)
 								.map(j->j.getCol_name()).collect(Collectors.toList());
 		List<Map<String, Object>> curData = dbController.queryTable(querySql);
-		
 		
 		/* distinguish data to update or data to insert */
 		List<Map<String, Object>> toUpdateList = new ArrayList<>();
@@ -103,7 +103,7 @@ public class GUIService {
 			Set<Map<String, Object>> _s = content.stream().map(j->getKeyColMap(j, keyColsName)).collect(Collectors.toSet());
 			if (_s.size() != content.size()) {
 				logger.error("Duplicate key columns are found");
-				return "Error - Duplicate key columns are found";
+				return genErrMsgToReturn("Error - Duplicate key columns are found");
 			}
 			
 			// loop each row of new data
@@ -154,7 +154,7 @@ public class GUIService {
 		List<Map<String, Object>> result = insertResult;
 		result.addAll(updateResult);
 		
-		return result.toString();
+		return result;
     }
 	
 
@@ -169,8 +169,22 @@ public class GUIService {
 			
 		}
 		catch(Exception e) {
-			logger.error("Get table [{}] metadata error", tableName);
+			logger.error("Get table [{}] metadata error : ", tableName, e);
 			return Optional.empty();
+		}
+		
+	}
+	
+	private List<TableDO> getTableMetaData(){
+		
+		try {
+			URL url = this.getClass().getResource("/TABLE.json");
+			List<TableDO> tables = new ObjectMapper().readValue(new File(new URI(url.toString())), new TypeReference<List<TableDO>>(){});
+			return tables;
+		}
+		catch(Exception e) {
+			logger.error("Get table metadata error :", e);
+			return new ArrayList<>();
 		}
 		
 	}
@@ -180,5 +194,15 @@ public class GUIService {
 				.filter(j->keyColsName.contains(j.getKey()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	}
+	
+	private List<Map<String, Object>> genErrMsgToReturn(String errMsg){
+		Map<String, Object> m = new HashMap<>();
+		m.put("ErrMsg", (Object) errMsg);
+		return Arrays.asList(m);
+	}
+	
+	//TODO check nullable
+	//TODO is import complete mode
+	//TODO table_name_uth
 
 }

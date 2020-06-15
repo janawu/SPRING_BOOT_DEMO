@@ -1,70 +1,82 @@
-[
-	{
-		"table_name": "User",
-		"table_name_uth": "",
-		"table_alias": "USER CONFIG TABLE",
-		"privilege_role": "",
-		"query_sql": "SELECT t.name, t.phone, t.address, t.birthday, t.lucky_number, t.update_user, t.update_dt FROM User t",
-		"insert_sql": "INSERT INTO User (name, phone, address, birthday, lucky_number, update_user, update_dt) VALUES (:name, :phone, :address, :birthday, :lucky_number, :update_user, now())",
-		"update_sql": "UPDATE User SET address=:address, lucky_number=:lucky_number, update_user update_dt=now() where name=:name and phone=:phone and birthday=:birthday",
-		"delete_sql": "DELETE FROM User where name=:name and phone=:phone and birthday=:birthday",
-		"columns":[
-			{
+[{
+	"table_name": "User",
+	"table_name_uth": "",
+	"table_alias": "USER CONFIG TABLE",
+	"privilege_role": "",
+	"is_import_complete_mode": false,
+	"query_sql": "SELECT t.name, t.phone, t.address, t.birthday, t.lucky_number, t.update_user, t.update_dt FROM User t",
+	"insert_sql": "INSERT INTO User (name, phone, address, birthday, lucky_number, update_user, update_dt) VALUES (:name, :phone, :address, :birthday, :lucky_number, :update_user, now())",
+	"update_sql": "UPDATE User SET address=:address, lucky_number=:lucky_number, update_user update_dt=now() where name=:name and phone=:phone and birthday=:birthday",
+	"delete_sql": "DELETE FROM User where name=:name and phone=:phone and birthday=:birthday",
+	"columns": [{
 			"col_name": "name",
 			"alias": "Name",
-			"data_type": "String",	
+			"data_type": "String",
 			"is_key": true,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			},
-			{
+			"options": [],
+			"default_val": ""
+		},
+		{
 			"col_name": "phone",
 			"alias": "Phone",
-			"data_type": "String",	
+			"data_type": "String",
 			"is_key": true,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			},
-			{
+			"options": [],
+			"default_val": ""
+		},
+		{
 			"col_name": "address",
 			"alias": "Add.",
-			"data_type": "String",	
+			"data_type": "String",
 			"is_key": false,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			},
-			{
+			"options": [],
+			"default_val": ""
+		},
+		{
 			"col_name": "lucky_number",
 			"alias": "Lucky No.",
-			"data_type": "Integer",	
+			"data_type": "Integer",
 			"is_key": false,
+			"is_nullable": true,
 			"is_optional": true,
-			"options": [83,4,5]
-			},
-			{
+			"options": [83, 4, 5],
+			"default_val": ""
+		},
+		{
 			"col_name": "birthday",
 			"alias": "Birthday",
-			"data_type": "Date",	
+			"data_type": "Date",
 			"is_key": true,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			},
-			{
+			"options": [],
+			"default_val": ""
+		},
+		{
 			"col_name": "update_user",
 			"alias": "Update User",
-			"data_type": "String",	
+			"data_type": "String",
 			"is_key": false,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			},
-			{
+			"options": [],
+			"default_val": ""
+		},
+		{
 			"col_name": "update_dt",
 			"alias": "Update Time",
-			"data_type": "Date",	
+			"data_type": "DateTime",
 			"is_key": false,
+			"is_nullable": false,
 			"is_optional": false,
-			"options": []
-			}
-		]
-	}
-]
+			"options": [],
+			"default_val": ""
+		}
+	]
+}]

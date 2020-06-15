@@ -11,6 +11,7 @@ public class TableDO {
 	private String table_name_uth;
 	private String table_alias;
 	private String privilege_role;
+	private boolean is_import_complete_mode;
 	private String query_sql;
 	private String insert_sql;
 	private String update_sql;
@@ -21,6 +22,19 @@ public class TableDO {
     public String toString() {
          return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+
+	public boolean isIs_import_complete_mode() {
+		return is_import_complete_mode;
+	}
+
+
+
+	public void setIs_import_complete_mode(boolean is_import_complete_mode) {
+		this.is_import_complete_mode = is_import_complete_mode;
+	}
+
+
 
 	public List<ColumnDO> getColumns() {
 		return columns;
