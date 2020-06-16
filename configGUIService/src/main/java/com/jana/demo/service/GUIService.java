@@ -109,6 +109,8 @@ public class GUIService {
 			// loop each row of new data
 			for(Map<String, Object> newRow : content) {
 				
+				logger.info("@@ row: {}");
+				
 				boolean keyRowExisted = false;
 				
 				// get key columns map of row
@@ -204,5 +206,6 @@ public class GUIService {
 	//TODO check nullable
 	//TODO is import complete mode
 	//TODO table_name_uth
+	//TODO valid_sql
 
 }

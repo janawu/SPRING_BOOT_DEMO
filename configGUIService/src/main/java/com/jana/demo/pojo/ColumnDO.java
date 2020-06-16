@@ -15,11 +15,20 @@ public class ColumnDO {
 	private boolean is_optional;
 	private List<Object> options;
 	private Object default_val;
+	private String valid_sql;
 	
 	@Override
     public String toString() {
          return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	public String getValid_sql() {
+		return valid_sql;
+	}
+
+	public void setValid_sql(String valid_sql) {
+		this.valid_sql = valid_sql;
+	}
 
 	public String getCol_name() {
 		return col_name;
@@ -84,7 +93,5 @@ public class ColumnDO {
 	public void setDefault_val(Object default_val) {
 		this.default_val = default_val;
 	}
-
-	
 	
 }
