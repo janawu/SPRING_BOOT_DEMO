@@ -14,20 +14,20 @@ public class ColumnDO {
 	private boolean is_nullable;
 	private boolean is_optional;
 	private List<Object> options;
+	private String optionals_sql;
 	private Object default_val;
-	private String valid_sql;
 	
 	@Override
     public String toString() {
          return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	public String getValid_sql() {
-		return valid_sql;
+	public String getOptionals_sql() {
+		return optionals_sql;
 	}
 
-	public void setValid_sql(String valid_sql) {
-		this.valid_sql = valid_sql;
+	public void setOptionals_sql(String optionals_sql) {
+		this.optionals_sql = optionals_sql;
 	}
 
 	public String getCol_name() {

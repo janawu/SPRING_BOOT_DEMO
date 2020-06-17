@@ -16,8 +16,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "phone",
@@ -27,8 +27,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "address",
@@ -38,8 +38,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "lucky_number",
@@ -49,8 +49,8 @@
 			"is_nullable": true,
 			"is_optional": true,
 			"options": [83, 4, 5],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "birthday",
@@ -60,8 +60,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "update_user",
@@ -71,8 +71,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		},
 		{
 			"col_name": "update_dt",
@@ -82,8 +82,8 @@
 			"is_nullable": false,
 			"is_optional": false,
 			"options": [],
-			"default_val": "",
-			"valid_sql": ""
+			"options_sql": "",
+			"default_val": ""
 		}
 	]
 }]
